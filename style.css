@@ -3,10 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+.container_body{
+    display: flex;
+    justify-content: center;
+}
 .container{
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: 80%;
     height: 30vh;
 }
 .container div{
@@ -16,4 +20,14 @@
 }
 .container div:hover{
     background-color: aqua;
+}
+.container_button{
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
 }
