@@ -14,7 +14,7 @@ function cuadricula (valor){
         cl16.innerHTML='';
     } 
 
-        // crear los nuevos divs
+    // crear los nuevos divs
     // Y añadir su contenido
     const contenDiv = [];
     for (let i = 0; i < valor; i++) {
@@ -23,7 +23,6 @@ function cuadricula (valor){
         contenDiv[i]= oneDiv;
 
     }
-
     // verifica cual es el div que hay que pintar
     function fHover(e){
         if(pintar){
@@ -50,7 +49,21 @@ function tamano(){
             title: 'Error...',
             html: 'Solo se admiten  <b>Numeros</b>',
         })
-    }else cuadricula(valor);
+    }else {
+        if(valor > 4 && valor < 100){
+            cuadricula(valor)
+            let divs = document.querySelectorAll('.container div');
+            let porcen = (valor*100)/(valor*valor);
+            divs.forEach((e)=> e.style.width=`${porcen}%`);
+        }
+        else {
+            Swal.fire({
+            icon: 'error',
+            title: 'Error...',
+            html: 'Solo se admiten numeros mayores a <b>4</b> y <br> menores a <b>100</b>',
+            })
+        }
+    }
 }
 
 

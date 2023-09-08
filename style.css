@@ -12,18 +12,19 @@
     flex-wrap: wrap;
     width: 80%;
     height: 30vh;
+    border: solid thin;
 }
 .container div{
     width: 6.25%;
     background-color: bisque;
-    border: solid 1px;
 }
 .container div:hover{
     background-color: aqua;
 }
-.container_button{
+.container_buttons{
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 button {
