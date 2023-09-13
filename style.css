@@ -3,6 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+header {
+    margin: 20px;
+    padding: 5px;
+    text-align: center;
+
+}
 .container_body{
     display: flex;
     justify-content: center;
@@ -18,9 +24,6 @@
     width: 6.25%;
     background-color: bisque;
 }
-.container div:hover{
-    background-color: aqua;
-}
 .container_buttons{
     display: flex;
     justify-content: center;
@@ -28,7 +31,55 @@
 }
 
 button {
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 4px;
+    padding: 10px;
     margin: 10px;
+    background-color: white;
+    border: solid thin;
+    transition: background-color .5s ease;
+    min-width: 110px;
+}
+
+button.secondary{
+    border-color: #616161  ;
+    color:  #616161 ;
+}
+button.sucess{
+    border-color: #1ea51e  ;
+    color:  #1ea51e ;
+}
+
+button.ramdon{
+    border-color:#f1c40f ;
+    color:#f1c40f ;
+}
+button.info{
+    border-color: #5dade2;
+    color: #5dade2;
+}
+button.primary:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+button.secondary:hover{
+    background-color: #616161  ;
+    color:  white ;
+    cursor: pointer;
+}
+button.sucess:hover{
+    background-color: #1ea51e;
+    color: white;
+    cursor: pointer;
+}
+
+button.ramdon:hover{
+    background-color:#f1c40f ;
+    color:black ;
+    cursor: pointer;
+}
+button.info:hover{
+    background-color: #5dade2;
+    color: white;
+    cursor: pointer;
 }

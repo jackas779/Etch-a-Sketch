@@ -9,11 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <header>
+        <h1>Etch-a-Sketch</h1>
+    </header>
     <div class="container_body">
         <div class="container_buttons">
-            <button onclick="tamano()">ingresar tamaño</button>
-            <button onclick="">Color Negro</button>
-            <button onclick="">Color Ramdon</button>
+            <button class="sucess" onclick="tamano()">Enter Size</button>
+            <button class="primary" onclick="pintar('negro')">Color Black</button>
+            <button class="ramdon" onclick="pintar('ramdon'); generarNuevoColor()">Color Ramdon</button>
+            <button class="info" onclick="pintar('borrador')">Erase</button>
+            <button class="secondary" onclick="erasedAll()">Erase All</button>
         </div>
         <div class="container"></div> 
     </div>
