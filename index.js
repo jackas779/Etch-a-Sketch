@@ -60,6 +60,7 @@ function tamano(){
 function pintar(val){
     /// incializamos en falso para que no marque por que si
     let pintar = false;
+    let color = 0;
 
     // verifica cual es el div que hay que pintar
     function fHover(e){
@@ -72,15 +73,32 @@ function pintar(val){
         else if(pintar && val == 'borrador'){
             e.target.style.backgroundColor = 'bisque';
         }
+        else if(pintar && val == 'shadow'){
+            if(color < 20 && color <=100){
+                color +=20;
+            }
+            console.log(`#ff0000${color}`);
+            e.target.style.backgroundColor = `#ff0000${color}`;
+        }
+        else if(pintar && val == 'light'){
+            e.target.style.backgroundColor = 'black';
+        }
     }
 
     // llama al div que contendra la cuadricula
     const cl16 = document.querySelector('.container');
 
     // enventos del div
-    cl16.addEventListener('mousedown',() => pintar = true);
+    cl16.addEventListener('mousedown',(e) => {
+        pintar = true;
+        fHover(e);
+    });
     cl16.addEventListener('mouseup',() => pintar = false);
-    cl16.addEventListener('mousemove',fHover);
+    cl16.addEventListener('mouseover',fHover);
+    cl16.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+    });
+
 }
 
 /// funcion para crear colores. 
