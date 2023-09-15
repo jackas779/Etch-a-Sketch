@@ -65,7 +65,7 @@ function pintar(val){
     // verifica cual es el div que hay que pintar
     function fHover(e){
         if(pintar && val == 'negro'){
-            e.target.style.backgroundColor = 'black';
+            e.target.style.backgroundColor = '#000000';
         }
         else if(pintar && val == 'ramdon'){
             e.target.style.backgroundColor = generarNuevoColor();
@@ -74,14 +74,12 @@ function pintar(val){
             e.target.style.backgroundColor = 'bisque';
         }
         else if(pintar && val == 'shadow'){
-            if(color < 20 && color <=100){
-                color +=20;
-            }
-            console.log(`#ff0000${color}`);
-            e.target.style.backgroundColor = `#ff0000${color}`;
+          newcolor = shadowF(e);
+          // console.log(newcolor);
+          e.target.style.backgroundColor = `#ff0000${color}`;
         }
         else if(pintar && val == 'light'){
-            e.target.style.backgroundColor = 'black';
+            e.target.style.backgroundColor = '#000000';
         }
     }
 
@@ -118,4 +116,24 @@ function generarNuevoColor(){
 function erasedAll(){
     const container = document.querySelector('.container');
     container.childNodes.forEach((e)=>e.style.backgroundColor='bisque');
+}
+/// funcion para oscurecer el color y para aclararlo 
+function shadowF(e){
+  colorAct = rgbToHex(e.target.style.backgroundColor);
+  colorAct= colorAct+'20';
+  console.log(colorAct);
+  // console.log(colorAct.charAt(7));
+
+
+}
+
+// Función para convertir el valor RGB en formato hexadecimal
+function rgbToHex(rgb) {
+   // Si es un valor RGB, lo convertimos a hexadecimal
+   if (/^rgb\((\d+), (\d+), (\d+)\)$/i.test(rgb)) {
+    const [_, r, g, b] = rgb.match(/^rgb\((\d+), (\d+), (\d+)\)$/i);
+    return `#${Number(r).toString(16).padStart(2, '0')}${Number(g).toString(16).padStart(2, '0')}${Number(b).toString(16).padStart(2, '0')}`;
+  }
+  // Si no se puede convertir, devolvemos el valor original
+  return rgb;
 }
