@@ -2,103 +2,106 @@ document.addEventListener('DOMContentLoaded', () => {
     cuadricula(''); pintar('negro');
 });
 
+//// variable ppara indicar cuando pintar yb cuando dedjar de pintar
+let eventac = false;
+/// variable para indentificar cual boton esta oprimido|
+let tipeButton = null;
+// div que contiene la cuadricula
+const cl16 = document.querySelector('.container');
+//// evento que indica que se puede pintar
+cl16.addEventListener('mousedown',(e) => {
+  eventac = true;
+  fHover(e);
+});
+// evento para cuando deje de oprimir el mouse el clic deje de pintar
+cl16.addEventListener('mouseup',(e) => {
+  eventac = false;
+});
+// eventoque pintara mientras este oprimido el boton del mouse
+cl16.addEventListener('mouseover',(e) => {
+  fHover(e);
+});
+////// evitamos con eset evneto que los divs se puedan arrastrar
+cl16.addEventListener('dragstart', (e) => {
+  e.preventDefault();
+});
+///funcion para crear las cuadriculas
 function cuadricula (valor){
-    // llama al div que contendra la cuadricula
-    const cl16 = document.querySelector('.container');
+  // verifica si se le paso un valor o si se inicoo en blacno
+  if(valor === '') valor = 256;
+  else{ 
+      valor *=valor ;
+      cl16.innerHTML='';
+  } 
 
-    // verifica si se le paso un valor 
-    if(valor === '') valor = 256;
-    else{ 
-        valor *=valor ;
-        cl16.innerHTML='';
-    } 
+  // crear los nuevos divs
+  // Y añadir su contenido
+  const contenDiv = [];
+  for (let i = 0; i < valor; i++) {
 
-    // crear los nuevos divs
-    // Y añadir su contenido
-    const contenDiv = [];
-    for (let i = 0; i < valor; i++) {
-
-        let oneDiv = document.createElement("div");
-        contenDiv[i]= oneDiv;
-
-    }
-    // agrega divs al contendedor
-    contenDiv.forEach((e) => cl16.appendChild(e));
+      let oneDiv = document.createElement("div");
+      contenDiv[i]= oneDiv;
+  }
+  // agrega divs al contendedor
+  contenDiv.forEach((e) => {
+    cl16.appendChild(e)
+  });
 };
+//// funcion que se encargar de pintar  los div dependiendo del boton presioando
+function fHover(e){
+  if(eventac && tipeButton == 'negro'){
+    e.target.style.backgroundColor = '#000000';
+  }
+  else if(eventac && tipeButton == 'ramdon'){
+    e.target.style.backgroundColor = generarNuevoColor();
+  }
+  else if(eventac && tipeButton == 'borrador'){
+    e.target.style.backgroundColor = '#FFFFFF';
+  }
+  else if(eventac && tipeButton == 'shadow'){
+    newcolor = shadowF(e,'S');
+    e.target.style.backgroundColor = newcolor;
+  }
+  else if(eventac && tipeButton == 'light'){
+    newcolor = shadowF(e,'L');
+    e.target.style.backgroundColor = newcolor;
+  }
+}
 
-// funcion para cammbiar la escala de la cudricula la cuadricula
+// funcion para cambiar la escala de la cudricula
 function tamano(){
     let valor ;
     valor = window.prompt("Configura un tamaño para la cuadricula");
     valor = Number(valor);
     if(isNaN(valor)){
-        Swal.fire({
-            icon: 'error',
-            title: 'Error...',
-            html: 'Solo se admiten  <b>Numeros</b>',
-        })
+      // alerta personalizada con la libreria de swager
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        html: 'Solo se admiten  <b>Numeros</b>',
+      })
     }else {
-        if(valor > 4 && valor < 100){
-            cuadricula(valor)
-            let divs = document.querySelectorAll('.container div');
-            let porcen = (valor*100)/(valor*valor);
-            divs.forEach((e)=> e.style.width=`${porcen}%`);
-        }
-        else {
-            Swal.fire({
-            icon: 'error',
-            title: 'Error...',
-            html: 'Solo se admiten numeros mayores a <b>4</b> y <br> menores a <b>100</b>',
-            })
-        }
+      if(valor > 4 && valor < 100){
+        // pasamos los parametros que tendra la nueva cuadricula
+        cuadricula(valor)
+        let divs = document.querySelectorAll('.container div');
+        let porcen = (valor*100)/(valor*valor);
+        divs.forEach((e)=> e.style.width=`${porcen}%`);
+      }
+      else {
+        Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        html: 'Solo se admiten numeros mayores a <b>4</b> y <br> menores a <b>100</b>',
+        })
+      }
     }
 }
-
-
-// funcion para pintar la cuadricula para el color negro y el alcoiris y el borrador
-
+/// indicamos que tipo de button esta oprimido
 function pintar(val){
-    /// incializamos en falso para que no marque por que si
-    let pintar = false;
-    let color = 0;
-
-    // verifica cual es el div que hay que pintar
-    function fHover(e){
-        if(pintar && val == 'negro'){
-            e.target.style.backgroundColor = '#000000';
-        }
-        else if(pintar && val == 'ramdon'){
-            e.target.style.backgroundColor = generarNuevoColor();
-        }
-        else if(pintar && val == 'borrador'){
-            e.target.style.backgroundColor = 'bisque';
-        }
-        else if(pintar && val == 'shadow'){
-          newcolor = shadowF(e);
-          // console.log(newcolor);
-          e.target.style.backgroundColor = `#ff0000${color}`;
-        }
-        else if(pintar && val == 'light'){
-            e.target.style.backgroundColor = '#000000';
-        }
-    }
-
-    // llama al div que contendra la cuadricula
-    const cl16 = document.querySelector('.container');
-
-    // enventos del div
-    cl16.addEventListener('mousedown',(e) => {
-        pintar = true;
-        fHover(e);
-    });
-    cl16.addEventListener('mouseup',() => pintar = false);
-    cl16.addEventListener('mouseover',fHover);
-    cl16.addEventListener('dragstart', (e) => {
-        e.preventDefault();
-    });
-
+  tipeButton = val;
 }
-
+// funcion para pintar la cuadricula para el color negro , el alcoiris
 /// funcion para crear colores. 
 function generarNuevoColor(){
 	var simbolos, color;
@@ -110,30 +113,42 @@ function generarNuevoColor(){
 	}
     return color;
 }
-
 /// funcion para limpiar la cuadricula sin volver a cargarla
-
 function erasedAll(){
     const container = document.querySelector('.container');
-    container.childNodes.forEach((e)=>e.style.backgroundColor='bisque');
+    container.childNodes.forEach((e)=>e.style.backgroundColor='#FFFFFF');
 }
 /// funcion para oscurecer el color y para aclararlo 
-function shadowF(e){
-  colorAct = rgbToHex(e.target.style.backgroundColor);
-  colorAct= colorAct+'20';
-  console.log(colorAct);
-  // console.log(colorAct.charAt(7));
-
-
-}
-
-// Función para convertir el valor RGB en formato hexadecimal
-function rgbToHex(rgb) {
-   // Si es un valor RGB, lo convertimos a hexadecimal
-   if (/^rgb\((\d+), (\d+), (\d+)\)$/i.test(rgb)) {
-    const [_, r, g, b] = rgb.match(/^rgb\((\d+), (\d+), (\d+)\)$/i);
-    return `#${Number(r).toString(16).padStart(2, '0')}${Number(g).toString(16).padStart(2, '0')}${Number(b).toString(16).padStart(2, '0')}`;
+function shadowF(e,b){
+  // colorAct = rgbToHex(e.target.style.backgroundColor);
+  ///traemos el color de fondo
+  colorAct = window.getComputedStyle(e.target).backgroundColor;
+  ///poder extraer los valores del color rgb
+  const rgbaValues = colorAct.match(/\d+(\.\d+)?/g);
+  ///// condicional para mirar si es para sombria o aclarecer
+  //recorre los valores y suma o resta dependiendo si es para osucrecer o iluminar poco a poco
+  if(b == 'L'){
+    if(rgbaValues[0] == 255){
+      return colorAct;
+    }
+    else{
+      for (let i = 0; i < 3; i++) {
+        rgbaValues[i] = parseFloat(rgbaValues[i]) + 25.5;
+      }
+      colorAct = `rgb(${rgbaValues[0]},${rgbaValues[1]},${rgbaValues[2]})`;
+      return colorAct ; 
+    }
   }
-  // Si no se puede convertir, devolvemos el valor original
-  return rgb;
+  else {
+    if(rgbaValues[0] == 0){
+      return colorAct;
+    }
+    else{
+      for (let i = 0; i < 3; i++) {
+        rgbaValues[i] -= 25.5;
+      }
+      colorAct = `rgb(${rgbaValues[0]},${rgbaValues[1]},${rgbaValues[2]})`;
+      return colorAct ; 
+    }
+  }
 }

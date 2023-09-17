@@ -22,7 +22,7 @@ header {
 }
 .container div{
     width: 6.25%;
-    background-color: bisque;
+    background-color: #FFFFFF;
 }
 .container_buttons{
     display: flex;
